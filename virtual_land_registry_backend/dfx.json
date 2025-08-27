@@ -1,0 +1,12 @@
+{
+  "canisters": {
+    "virtual_land_registry_backend": {
+      "type": "rust",
+      "main": "src/lib.rs",
+      "candid": "virtual_land_registry_backend.did",
+      "package": "virtual_land_registry_backend"
+    }
+  },
+  "dfx": "0.29.0",
+  "version": 1
+}
