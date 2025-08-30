@@ -1,0 +1,91 @@
+{
+  "name": "Virtual Land Registry",
+  "short_name": "VLR",
+  "description": "A decentralized platform for registering and trading virtual land assets on the ICP blockchain",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f2937",
+  "theme_color": "#667eea",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "My Lands",
+      "short_name": "My Lands",
+      "description": "View your registered lands",
+      "url": "/my-lands",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Marketplace",
+      "short_name": "Market",
+      "description": "Browse and buy virtual lands",
+      "url": "/marketplace",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Register Land",
+      "short_name": "Register",
+      "description": "Register new virtual land",
+      "url": "/register",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Virtual Land Registry Dashboard"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Virtual Land Registry Mobile"
+    }
+  ]
+}

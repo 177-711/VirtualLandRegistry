@@ -1,0 +1,152 @@
+type Coordinates = record {
+  x : int32;
+  y : int32;
+  z : int32;
+};
+
+type Dimensions = record {
+  width : nat32;
+  height : nat32;
+  depth : nat32;
+};
+
+type LandType = variant {
+  Residential;
+  Commercial;
+  Industrial;
+  Agricultural;
+  Entertainment;
+  Mixed;
+};
+
+type LandMetadata = record {
+  environment : opt text;
+  special_features : vec text;
+  access_roads : vec text;
+  utilities : vec text;
+};
+
+type LandInfo = record {
+  id : nat64;
+  owner : principal;
+  coordinates : Coordinates;
+  dimensions : Dimensions;
+  land_type : LandType;
+  description : text;
+  metadata : opt LandMetadata;
+  created_at : nat64;
+  last_updated : nat64;
+};
+
+type LandRegistration = record {
+  coordinates : Coordinates;
+  dimensions : Dimensions;
+  land_type : LandType;
+  description : text;
+  metadata : opt LandMetadata;
+};
+
+type MarketplaceListing = record {
+  land_id : nat64;
+  seller : principal;
+  price : nat64;
+  listed_at : nat64;
+  land_info : LandInfo;
+};
+
+type TransactionType = variant {
+  Registration;
+  Transfer;
+  Sale;
+};
+
+type TransactionRecord = record {
+  land_id : nat64;
+  from : principal;
+  to : principal;
+  price : opt nat64;
+  transaction_type : TransactionType;
+  timestamp : nat64;
+};
+
+type LandStatistics = record {
+  total_lands : nat64;
+  total_owners : nat64;
+  lands_for_sale : nat64;
+  average_price : opt nat64;
+  total_transactions : nat64;
+};
+
+type SearchFilters = record {
+  land_type : opt LandType;
+  min_price : opt nat64;
+  max_price : opt nat64;
+  coordinates_range : opt record { Coordinates; Coordinates };
+  min_area : opt nat32;
+  features : opt vec text;
+};
+
+type LandRegistryError = variant {
+  LandNotFound;
+  Unauthorized;
+  LandAlreadyExists;
+  InvalidCoordinates;
+  InvalidDimensions;
+  InsufficientFunds;
+  LandNotForSale;
+  OwnershipError;
+  InvalidInput;
+};
+
+type LandRegistryResult = variant {
+  Ok : nat64;
+  Err : LandRegistryError;
+};
+
+type LandRegistryResult_1 = variant {
+  Ok;
+  Err : LandRegistryError;
+};
+
+service : {
+  // Land registration and management
+  register_land : (LandRegistration) -> (LandRegistryResult);
+  get_land : (nat64) -> (opt LandInfo) query;
+  get_all_lands : () -> (vec LandInfo) query;
+  get_land_owner : (nat64) -> (opt principal) query;
+  get_lands_by_owner : (principal) -> (vec LandInfo) query;
+  transfer_land : (nat64, principal) -> (LandRegistryResult_1);
+  update_land_metadata : (nat64, LandMetadata) -> (LandRegistryResult_1);
+  
+  // Marketplace functions
+  list_for_sale : (nat64, nat64) -> (LandRegistryResult_1);
+  remove_from_sale : (nat64) -> (LandRegistryResult_1);
+  buy_land : (nat64) -> (LandRegistryResult_1);
+  get_marketplace_listings : () -> (vec MarketplaceListing) query;
+  get_marketplace_listing : (nat64) -> (opt MarketplaceListing) query;
+  get_lands_for_sale_by_type : (LandType) -> (vec MarketplaceListing) query;
+  search_marketplace : (SearchFilters) -> (vec MarketplaceListing) query;
+  
+  // Search and discovery
+  search_lands : (SearchFilters) -> (vec LandInfo) query;
+  search_by_coordinates : (Coordinates, Coordinates) -> (vec LandInfo) query;
+  get_lands_near_coordinates : (Coordinates, nat32) -> (vec LandInfo) query;
+  
+  // Analytics and history
+  get_transaction_history : (opt nat64) -> (vec TransactionRecord) query;
+  get_price_history : (nat64) -> (vec record { nat64; nat64 }) query;
+  get_user_transactions : (principal) -> (vec TransactionRecord) query;
+  get_land_statistics : () -> (LandStatistics) query;
+  
+  // Utility functions
+  get_total_supply : () -> (nat64) query;
+  get_next_land_id : () -> (nat64) query;
+  verify_land_ownership : (nat64, principal) -> (bool) query;
+  
+  // Admin functions
+  add_admin : (principal) -> (LandRegistryResult_1);
+  is_admin : (principal) -> (bool) query;
+  remove_land : (nat64) -> (LandRegistryResult_1);
+  backup_lands : () -> (vec LandInfo) query;
+  restore_lands : (vec LandInfo) -> (LandRegistryResult_1);
+}

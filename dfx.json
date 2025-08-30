@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "canisters": {
+    "virtual_land_registry_backend": {
+      "type": "rust",
+      "package": "virtual_land_registry_backend",
+      "candid": "src/virtual_land_registry_backend/virtual_land_registry_backend.did"
+    },
+    "virtual_land_registry_frontend": {
+      "type": "assets",
+      "source": ["virtual_land_registry_frontend/dist"],
+      "dependencies": ["virtual_land_registry_backend"]
+    }
+  },
+  "defaults": {
+    "replica": {
+      "port": 4943,
+      "subnet_type": "system"
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:4943",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": ["https://ic0.app"],
+      "type": "persistent"
+    }
+  }
+}
